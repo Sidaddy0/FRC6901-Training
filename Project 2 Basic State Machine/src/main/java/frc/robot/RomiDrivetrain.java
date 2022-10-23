@@ -57,7 +57,11 @@ public class RomiDrivetrain extends SubsystemBase {
 
   private final DifferentialDriveOdometry mOdometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
 
-
+  public enum speedState {
+    FAST,
+    NORMAL,
+    SLOW
+  }
 
   /** Creates a new RomiDrivetrain. */
   public RomiDrivetrain() {
