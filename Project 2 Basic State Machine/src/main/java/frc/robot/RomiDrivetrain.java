@@ -63,6 +63,12 @@ public class RomiDrivetrain extends SubsystemBase {
     SLOW
   }
 
+  public speedState speed = speedState.NORMAL;
+
+  public void setState(speedState state) {
+    speed = state;
+  }
+
   /** Creates a new RomiDrivetrain. */
   public RomiDrivetrain() {
     // Use inches as unit for encoder distances
@@ -78,7 +84,15 @@ public class RomiDrivetrain extends SubsystemBase {
    * @param zaxisRotate The speed at which the spins clockwise and counterclockwise. Should be a number between -1 and 1.
    */
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
-    mDiffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
+    if (speed == speedState.NORMAL) {
+      mDiffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
+    }
+    else if (speed == speedState.FAST) {
+      mDiffDrive.arcadeDrive(xaxisSpeed * 2, zaxisRotate * 2);
+    }
+    else {
+      mDiffDrive.arcadeDrive(xaxisSpeed * 0.5, zaxisRotate * 0.5);
+    }
   }
 
   public void resetEncoders() {

@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RomiDrivetrain.speedState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -19,6 +20,9 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class Robot extends TimedRobot {
 
   private final RomiDrivetrain mDrivetrain = new RomiDrivetrain();
+
+  private final int controllerPort = 0;
+  XboxController controller = new XboxController(controllerPort);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -52,7 +56,17 @@ public class Robot extends TimedRobot {
   
   /** This function is called periodically during operator control. HINT you code will be in this function*/
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if (controller.getAButtonPressed()) {
+      mDrivetrain.setState(speedState.NORMAL);
+    }
+    if (controller.getBButtonPressed()) {
+      mDrivetrain.setState(speedState.FAST);
+    }
+    if (controller.getXButtonPressed()) {
+      mDrivetrain.setState(speedState.SLOW);
+    }
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
